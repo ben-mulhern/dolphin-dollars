@@ -1,14 +1,14 @@
-CREATE TABLE transaction                                                          
+CREATE TABLE block                                                          
 (                                                                              
         --Primary Key                                                                                         
-        PRIMARY KEY (transaction_id),                                             
+        PRIMARY KEY (block_id),                                             
                                                                                  
         --Columns                                                              
-        transaction_id INT(10) NOT NULL GENERATED ALWAYS AS IDENTITY UNIQUE,
-		description VARCHAR(50) NULL,
-		time_stamp TIMESTAMP,
-		effective_date DATE,
-                             
-                                                                                 
-        CONSTRAINT TRAN_UNIQUE                                     
-        UNIQUE (short_code_identifier)                                                                              
+        block_id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+		description VARCHAR(200) NOT NULL DEFAULT ' ',
+		time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		effective_date DATE NOT NULL DEFAULT CURRENT_DATE,
+		
+		--Constraints
+		CONSTRAINT positive_transaction_id CHECK (block_id > 0)
+);                                                                           
