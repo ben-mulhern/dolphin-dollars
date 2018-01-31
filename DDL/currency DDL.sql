@@ -17,6 +17,6 @@ CREATE TABLE currency
 	active CHAR(1) 
 		NOT NULL 
 		DEFAULT 'Y' 
-		CHECK ACTIVE IN ('Y','N')
+		CHECK active IN ('Y','N')
 
 );
