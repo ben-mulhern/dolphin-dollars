@@ -7,7 +7,7 @@ CREATE TABLE block_detail
   block_id INT NOT NULL,
   entry_number INT NOT NULL,
   cash_value NUMERIC(10,2) NOT NULL DEFAULT 0,
-  user_id (whatever format user_detail has),
+  user_id INT NOT NULL,
   block_detail_description VARCHAR(200) NOT NULL DEFAULT ' ',
   written_off CHAR(1) NOT NULL DEFAULT 'Y',
   currency_code CHAR(3) NOT NULL,
