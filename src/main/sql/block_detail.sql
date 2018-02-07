@@ -14,8 +14,8 @@ CREATE TABLE block_detail
   ledger_id CHAR(10) NOT NULL,
 
 --Constraints
-  CONSTRAINT written_off_is_boolean
-  CHECK written_off IN ('Y','N')
+  CONSTRAINT written_off_is_yes_or_no
+  CHECK written_off IN ('Y','N'),
   
   CONSTRAINT foreign_key_block_id
   FOREIGN KEY (block_id)
@@ -33,5 +33,5 @@ CREATE TABLE block_detail
   FOREIGN KEY (ledger_id)
   REFERENCES ledger (ledger_id)
   ON DELETE RESTRICT
-  ON UPDATE RESTRICT,
+  ON UPDATE RESTRICT
 );                                                                           

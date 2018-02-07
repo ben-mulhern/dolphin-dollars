@@ -13,7 +13,7 @@ CREATE TABLE user_detail
   email_address VARCHAR(200) NOT NULL,
   
   --Constraints
-  CONSTRAINT active_is_boolean
+  CONSTRAINT active_is_yes_or_no
   CHECK active IN ('Y','N')
 
 );                                                                           
