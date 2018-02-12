@@ -20,3 +20,6 @@ Inter-office financial transactions, backed up by the bank of Graham.
 - Reverse payment
 
 - Admin mode - full edit rights (delete, create, update)
+- Admin mode - Set global limits for total monies owed/owing
+- Admin mode - Set individual limits for total monies owed/owing
+- Deposit/debt interest
