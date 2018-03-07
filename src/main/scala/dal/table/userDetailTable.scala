@@ -1,10 +1,11 @@
 package dal.table
 
 import sqlest._
+import domain.UserID._
 
 class UserDetailTable(alias: Option[String]) extends Table("user_detail",None) {
 
-  val userID = column[Int]("user_ID")
+  val userID = column[UserID]("user_ID")
   val name = column[String]("name")
   val salutation = column[String]("salutation")
   val emailAddress = column[String]("email_address")
