@@ -2,7 +2,7 @@ package dal.table
 
 import sqlest._
 
-class CurrencyTable(alias: Option[String]) extends Table("currency") {
+class CurrencyTable(alias: Option[String]) extends Table("currency",None) {
 
   val currencyCode = column[String]("currency_code")
   val symbol = column[String]("symbol")

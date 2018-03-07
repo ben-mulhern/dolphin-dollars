@@ -2,7 +2,7 @@ package dal.table
 
 import sqlest._
 
-class BlockDetailTable(alias: Option[String]) extends Table("block_detail") {
+class BlockDetailTable(alias: Option[String]) extends Table("block_detail",None) {
 
   val blockID = column[Int]("block_id")
   val entryNumber = column[Int]("entry_number")
@@ -14,4 +14,4 @@ class BlockDetailTable(alias: Option[String]) extends Table("block_detail") {
   val ledgerID = column[String]("ledger_id")
 }
 
-object BlockTable extends BlockTable(None)
+object BlockDetailTable extends BlockTable(None)
