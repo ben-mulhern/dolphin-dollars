@@ -1,10 +1,10 @@
 package domain
 
-case class BlockDetail(id: BlockId,
+case class BlockDetail(id: BlockId, //'Block.scala'
                        entryNumber: Int,
                        cashValue: Float,
-                       userId: UserId,
+                       userId: UserId, //'User.scala'
                        blockDetailDescription: String,
                        writtenOff: Boolean,
-                       currencyCode: CurrencyCode,
-                       ledgerId: LedgerId)
+                       currencyCode: CurrencyCode, //'Currency.scala'
+                       ledgerId: LedgerId) //'Ledger.scala'
