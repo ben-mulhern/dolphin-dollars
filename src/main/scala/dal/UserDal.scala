@@ -3,7 +3,6 @@ package dal
 import sqlest._
 import domain.UserID._
 import dal.table.UserDetailTable
-import dal.PasswordSaltExtractor._
 
 trait UserDal extends SqlestDb {
 
