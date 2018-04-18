@@ -2,7 +2,7 @@ package domain
 
 case class BlockDetail(id: BlockId, //'Block.scala'
                        entryNumber: Int,
-                       cashValue: Float,
+                       cashValue: Double,
                        userId: UserId, //'User.scala'
                        blockDetailDescription: String,
                        writtenOff: Boolean,

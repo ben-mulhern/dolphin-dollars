@@ -5,4 +5,5 @@ case class BlockId (id: Int)
 case class Block (id: BlockId,
                   description: String,
                   timeStamp: String,
-                  effectiveDate: String)
+                  effectiveDate: String,
+                  blocks: List[BlockDetail]) //BlockDetail.scala
