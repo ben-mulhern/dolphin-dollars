@@ -7,10 +7,9 @@ object UserDal extends UserDal
 class UserService {
 
   def getUserJWT(userID:UserID, password:String): Either[String,Boolean] = {
-    val extract = UserDal.getPasswordSalt(userID).getOrElse(("",""))
-    val salt = extract._2
+    val (DataBasepassword,salt) = UserDal.getPasswordSalt(userID).getOrElse(("",""))
 
-     if ( password.bcrypt(salt) == extract._1) Right(true)
+     if ( password.bcrypt(salt) == DataBasepassword) Right(true)
      else Left("Password not correct")
   }
 }
