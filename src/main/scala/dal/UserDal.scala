@@ -4,7 +4,7 @@ import sqlest._
 import domain.UserID._
 import dal.table.UserDetailTable
 
-trait UserDal extends SqlestDb {
+class UserDal extends SqlestDb {
 
 
   def getPasswordSalt(id: UserID): Option[(String,String)]  = {
