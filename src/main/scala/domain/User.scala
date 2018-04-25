@@ -1,6 +1,8 @@
-package domain.User
+package domain
 
-import domain.UserID._
+case class UserId(id: String)
 
-case class User(id: UserID,
-				name: String) 
+case class User( id: UserId,
+                 name: String,
+                 active: Boolean,
+                 email_address: String)
