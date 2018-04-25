@@ -2,14 +2,14 @@ import  domain.UserID._
 import dal._
 import com.github.t3hnar.bcrypt._
 
-object UserDal extends UserDal
-
 class UserService {
 
-  def getUserJWT(userID:UserID, password:String): Either[String,Boolean] = {
-    val (dataBasepassword,salt) = UserDal.getPasswordSalt(userID).getOrElse(("",""))
+  val UserDal = new UserDal
 
-     if ( password.bcrypt(salt) == dataBasepassword) Right(true)
+  def getUserJWT(userID:UserID, userInputtedPassword:String): Either[String,Boolean] = {
+    val (dataBasePassword,salt) = UserDal.getPasswordSalt(userID).getOrElse(("",""))
+
+     if (userInputtedPassword.bcrypt(salt) == dataBasePassword) Right(true)
      else Left("Password not correct")
   }
 }
