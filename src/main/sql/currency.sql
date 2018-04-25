@@ -20,4 +20,3 @@ CREATE TABLE currency
     CHECK active IN ('Y','N')
 
 );
-                                                                                                                                    
