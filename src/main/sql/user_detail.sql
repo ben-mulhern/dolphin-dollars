@@ -4,9 +4,8 @@ CREATE TABLE user_detail
   PRIMARY KEY (user_id),                                             
                                                                          
 --Columns                                                              
-  user_id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+  user_id VARCHAR(50) NOT NULL,
   name VARCHAR(50) NOT NULL DEFAULT ' ',
-  salutation VARCHAR(50) NOT NULL DEFAULT ' ',
   password VARCHAR(200) NOT NULL,
   salt CHAR(64) NOT NULL,
   active CHAR(1) NOT NULL DEFAULT 'Y',
