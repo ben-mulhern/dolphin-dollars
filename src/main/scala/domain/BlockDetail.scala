@@ -1,7 +1,6 @@
 package domain
 
-case class BlockDetail(id: BlockId, //'Block.scala'
-                       entryNumber: Int,
+case class BlockDetail(entryNumber: Int,
                        cashValue: Double,
                        userId: UserId, //'User.scala'
                        blockDetailDescription: String,
