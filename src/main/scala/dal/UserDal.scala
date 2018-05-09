@@ -14,3 +14,4 @@ class UserDal extends SqlestDb {
     	.fetchHeadOption
   }
 }
+

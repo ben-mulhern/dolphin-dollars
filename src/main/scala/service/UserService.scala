@@ -10,6 +10,6 @@ class UserService {
     val (dataBasePassword,salt) = UserDal.getPasswordSalt(userID).getOrElse(("",""))
 
      if (userInputtedPassword.bcrypt(salt) == dataBasePassword) Right(true)
-     else Left("Password not correct")
+     else Left("Could not make JWT")
   }
 }
