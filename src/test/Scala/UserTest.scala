@@ -1,12 +1,12 @@
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 
-class SetSuite extends FunSuite {
+class SetSpec extends FlatSpec {
 
-  test("An empty Set should have size 0") {
+  "An empty Set" should "have size 0" in {
     assert(Set.empty.size == 0)
   }
 
-  test("Invoking head on an empty Set should produce NoSuchElementException") {
+  it should "produce NoSuchElementException when head is invoked" in {
     assertThrows[NoSuchElementException] {
       Set.empty.head
     }
