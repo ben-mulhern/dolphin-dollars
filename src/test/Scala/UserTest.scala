@@ -1,14 +1,22 @@
+import domain.UserID.UserID
 import org.scalatest.FunSuite
+import service.UserService._
 
-class SetSuite extends FunSuite {
+class UserTest extends FunSuite {
 
-  test("An empty Set should have size 0") {
-    assert(Set.empty.size == 0)
+  val user1 = UserID("User1")
+  val password1 = "password"
+  val password2 = "PASSWORD"
+
+  test("Matching passwords should yield a JWT"){
+    //checkAndCreateToken returns an Either[String,Jwt] so if successful
+    // we expect the return value to be a Right()
+    val returnValue = checkAndCreateToken(user1,password1,password1)
+    assert(returnValue.isRight)
   }
 
-  test("Invoking head on an empty Set should produce NoSuchElementException") {
-    assertThrows[NoSuchElementException] {
-      Set.empty.head
-    }
+  test("Passwords that do not match should yield an error"){
+    val returnValue = checkAndCreateToken(user1,password1,password2)
+    assert(returnValue.isLeft)
   }
 }
