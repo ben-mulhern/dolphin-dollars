@@ -1,22 +1,26 @@
 import domain.UserID.UserID
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 import service.UserService._
+import org.scalatest.Matchers._
 
-class UserTest extends FunSuite {
+class UserTest extends FlatSpec {
 
   val user1 = UserID("User1")
+  val emptyUser = UserID("")
   val password1 = "password"
   val password2 = "PASSWORD"
 
-  test("Matching passwords should yield a JWT"){
+  "Matching passwords" should "yield a JWT" in {
     //checkAndCreateToken returns an Either[String,Jwt] so if successful
     // we expect the return value to be a Right()
-    val returnValue = checkAndCreateToken(user1,password1,password1)
-    assert(returnValue.isRight)
+    checkAndCreateToken(user1,password1,password1) should be ('right)
   }
 
-  test("Passwords that do not match should yield an error"){
-    val returnValue = checkAndCreateToken(user1,password1,password2)
-    assert(returnValue.isLeft)
+  "Passwords that do not match" should "produce a failure scenario" in{
+    checkAndCreateToken(user1,password1,password2) should be ('left)
+  }
+
+  "An empty user ID" should "fail to retrieve the password and Salt" in{
+    getPasswordAndSalt(emptyUser) should be ('left)
   }
 }
