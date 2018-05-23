@@ -1,6 +1,6 @@
 package service
 
-import  domain.UserID._
+import domain.UserID._
 import dal._
 import com.github.t3hnar.bcrypt._
 import service.token.TokenService._
@@ -8,6 +8,7 @@ import service.token.TokenService._
 object UserService {
 
   val UserDal = new UserDal
+  val checkAndCreateTokenFailureMessage: String = "Could not make JWT"
 
   def getPasswordAndSalt(userID:UserID): Either[String,(String,String)] = {
     val extract: Option[(String,String)] = UserDal.getPasswordSalt(userID)
@@ -23,7 +24,7 @@ object UserService {
 
   def checkAndCreateToken(userID: UserID, userInputPassword: String, databasePassword: String): Either[String,Jwt] = {
     if (userInputPassword == databasePassword) Right(createToken(userID))
-    else Left("Could not make JWT")
+    else Left(checkAndCreateTokenFailureMessage)
   }
 
   def getUserJWT(userID:UserID, userInputtedPassword:String): Either[String,Jwt] = for {

@@ -10,7 +10,7 @@ class UserDal extends SqlestDb {
   def getPasswordSalt(id: UserID): Option[(String,String)]  = {
   	select(UserDetailTable.password, UserDetailTable.salt)
     	.from(UserDetailTable)
-    	.where(UserDetailTable.userID === id)
+    	.where(UserDetailTable.userID.toString == id.toString)
     	.fetchHeadOption
   }
 }

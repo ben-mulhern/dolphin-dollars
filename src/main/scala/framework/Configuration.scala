@@ -10,7 +10,7 @@ case class Server(host: String, port: Int)
 
 
 object Configuration {
-  val filename =  "C:\\Users\\thurleyw\\Documents\\dolphin-dollars\\src\\main\\resources\\application.conf"
+  val filename =  getClass.getResource("/application.conf").getFile
 
   val myConfigFile = new File(filename)
   val conf: Config = ConfigFactory.parseFile(myConfigFile).getConfig("application")
