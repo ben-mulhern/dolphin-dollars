@@ -1,7 +1,7 @@
 package dal
 
 import sqlest._
-import domain.UserID._
+import domain.User._
 import dal.table.UserDetailTable
 
 class UserDal extends SqlestDb {
@@ -13,5 +13,21 @@ class UserDal extends SqlestDb {
     	.where(UserDetailTable.userID.toString == id.toString)
     	.fetchHeadOption
   }
-}
 
+	def createUser(user:User,hashedPassword:String): Int =
+
+		database.withTransaction { implicit transaction =>
+		insert
+			.into(UserDetailTable)
+			.values(
+				UserDetailTable.userID -> user.id,
+				UserDetailTable.emailAddress -> user.email_address,
+				UserDetailTable.name -> user.name,
+				UserDetailTable.salt -> "",
+				UserDetailTable.password -> hashedPassword,
+				UserDetailTable.active -> user.active
+			).execute
+
+			}
+
+}

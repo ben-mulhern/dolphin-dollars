@@ -1,6 +1,7 @@
 package service
 
-import domain.UserID._
+import cats.data.Ior
+import domain.User._
 import dal._
 import com.github.t3hnar.bcrypt._
 import service.token.TokenService._
@@ -18,7 +19,7 @@ object UserService {
 
   def getHashedPassword(userInputtedPassword:String,salt:String): Either[String,String] = {
     val hashedPassword: String = userInputtedPassword.bcrypt(salt)
-    if(hashedPassword.isEmpty) Left("hashing Process Failed")
+    if(hashedPassword.isEmpty) Left("Hashing process failed.")
     else Right(hashedPassword)
   }
 
@@ -33,4 +34,14 @@ object UserService {
     finalJwt<- checkAndCreateToken(userID, hashedUserInputPassword, passwordSalt._1)
   } yield finalJwt
 
+  def createUser(user:User,password:String): Either[String,String] = {
+    val result = UserDal.createUser(user,password)
+    if(result == 1) Right("User created successfully")
+    else Left("User did not create successfully")
+  }
+
+
+
+
 }
+

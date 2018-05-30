@@ -5,7 +5,7 @@ import java.time.Instant
 
 import framework.Configuration
 
-import domain.UserID.UserID
+import domain.User._
 import pdi.jwt.{JwtAlgorithm, JwtCirce, JwtClaim}
 
 
