@@ -23,4 +23,5 @@ object TokenService {
     val algo = JwtAlgorithm.HS256
     JwtCirce.encode(claim, Configuration.securityConfig.jwtSecret, algo)
   }
+
 }

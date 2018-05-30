@@ -1,7 +1,8 @@
 import domain.User._
 import org.scalatest.FlatSpec
-import service.UserService._
+import service.jwt.JWTService._
 import org.scalatest.Matchers._
+import dal.PasswordSaltDal
 
 class UserServiceTest extends FlatSpec{
 
@@ -9,6 +10,7 @@ class UserServiceTest extends FlatSpec{
   val emptyUser = UserID("")
   val password1 = "password"
   val password2 = "PASSWORD"
+  val psd = new PasswordSaltDal
 
 
   behavior of "The creation of a JWT"
@@ -25,7 +27,7 @@ class UserServiceTest extends FlatSpec{
   behavior of "An empty user ID"
 
   it should "yield a failure message when retrieving the password and salt" in{
-    getPasswordAndSalt(emptyUser) should be ('left)
+    psd.getPasswordAndSalt(emptyUser) should be ('left)
   }
 
 
