@@ -10,10 +10,10 @@ package object JWTService {
   val PasswordSaltDal = new PasswordSaltDal
   val UserDal = new UserDal
 
-  val checkAndCreateTokenFailureMessage: String = "Could not make JWT"
+  val checkAndCreateTokenFailureMessage: String = "Invalid username or password"
 
-  def checkAndCreateToken(userID: UserID, userInputPassword: String, databasePassword: String): Either[String,Jwt] = {
-    if (userInputPassword == databasePassword) Right(createToken(userID))
+  def checkAndCreateToken(userID: UserID, hashedUserInputPassword: String, databasePassword: String): Either[String,Jwt] = {
+    if (hashedUserInputPassword == databasePassword) Right(createToken(userID))
     else Left(checkAndCreateTokenFailureMessage)
   }
 

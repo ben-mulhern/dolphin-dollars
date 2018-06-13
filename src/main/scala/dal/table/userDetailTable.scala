@@ -6,7 +6,7 @@ import sqlest.ast.TableColumn
 
 class UserDetailTable(alias: Option[String]) extends Table("user_detail",None) {
 
-  val userID: TableColumn[UserID] = column[UserID]("user_ID")
+  val userID = column[UserID]("user_ID")
   val name: TableColumn[String] = column[String]("name")
   val emailAddress: TableColumn[String] = column[String]("email_address")
   val password: TableColumn[String] = column[String]("password")
