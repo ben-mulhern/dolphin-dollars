@@ -14,7 +14,7 @@ class UserDal extends SqlestDb {
 		else Right(hashedPassword)}
 
 
-	def createUser(user:User,hashedPassword:String,salt:String): Int =
+	def createUserSQL(user:User,hashedPassword:String,salt:String): Int =
 
 		database.withTransaction { implicit transaction =>
 		insert
@@ -29,5 +29,23 @@ class UserDal extends SqlestDb {
 			).execute
 
 			}
+
+  def getRandomSalt: Either[String,String] = {
+    val result: String = generateSalt
+    if (result.isEmpty) Left("Could not generate salt")
+    else Right(result)
+  }
+
+  def writeNewUser(user:User,hashedPassword:String,salt:String): Either[String,String] = {
+    val result: Int = createUserSQL(user,hashedPassword,salt)
+    if(result == 1) Right("User created successfully")
+    else Left("Failed to add user to database")
+  }
+
+  def createUser(user:User,password:String): Either[String,String] = for {
+    salt <- getRandomSalt
+    hashedPassword <- getHashedPassword(password,salt)
+    tableWriteResult <- writeNewUser(user,hashedPassword,salt)
+  } yield tableWriteResult
 
 }

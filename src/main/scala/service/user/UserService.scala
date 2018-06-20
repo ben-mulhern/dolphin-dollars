@@ -1,30 +1,40 @@
 package service.user
 
-import com.github.t3hnar.bcrypt._
+import domain.User.User
 import dal._
-import domain.User._
-
+import org.http4s._
+import org.http4s.dsl._
+import org.http4s.server._
+import org.http4s.server.blaze._
+import org.json4s._
+import org.json4s.native.Serialization.read
+import service.ServiceUtilities._
 
 object UserService {
-  val UserDal = new UserDal
+  class userPassword (user:User,password: String)
+  val UserDal = new UserDal {}
 
-  def getRandomSalt: Either[String,String] = {
-    val result: String = generateSalt
-    if (result.isEmpty) Left("Could not generate salt")
-    else Right(result)
+  val userService = HttpService {
+    case req @ POST -> Root / "userPassword"  =>
+      req.decode[String] { data =>
+
+        println("here i am")
+        //logger.info("Received request to create new user profile: " + data)
+        val u: User = read[User](data)
+        val p: String = read[String](data)
+        httpJsonResponse(UserDal.createUser(u,p))
+      }
+
+//    case GET -> Root / "player" / userId =>
+//      //logger.info(s"Received request for player $playerId")
+//      //println(s"Received request for player $UserId")
+//      val p = userDal.getPlayer(playerId.toInt)
+//      println(s"Retrieved player $p from database")
+//      httpJsonResponse(p)
+
   }
 
-  def writeNewUser(user:User,hashedPassword:String,salt:String): Either[String,String] = {
-    val result: Int = UserDal.createUser(user,hashedPassword,salt)
-    if(result == 1) Right("User created successfully")
-    else Left("Failed to add user to database")
-  }
 
-  def createUser(user:User,password:String): Either[String,String] = for {
-    salt <- getRandomSalt
-    hashedPassword <- UserDal.getHashedPassword(password,salt)
-    tableWriteResult <- writeNewUser(user,hashedPassword,salt)
-  } yield tableWriteResult
 
 }
 
