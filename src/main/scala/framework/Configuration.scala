@@ -1,8 +1,6 @@
 package framework
 
-import java.io.File
-
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.ConfigFactory
 
 case class SecurityConfig(jwtSecret: String, jwtExpirationTime: Long)
 case class Database(url: String, username:String, password:String)
@@ -10,11 +8,7 @@ case class Server(host: String, port: Int)
 
 
 object Configuration {
-  //val filename =  getClass.getResource("C:/Users/thurleyw/Documents/dolphin-dollars/src/main/resources/application.conf").getFile
-  val filename = "C:\\Users\\thurleyw\\Documents\\dolphin-dollars\\src\\main\\resources\\application.conf"
-  val myConfigFile = new File(filename)
-  val conf: Config = ConfigFactory.parseFile(myConfigFile).getConfig("application")
-
+  private val conf = ConfigFactory.load
 
   val url: String = conf.getString("appdb.url")
   val username: String = conf.getString("appdb.username")
