@@ -1,6 +1,6 @@
 package service.user
 
-import domain.User.User
+import domain.User.{User, UserID}
 import dal._
 import org.http4s._
 import org.http4s.dsl._
@@ -17,8 +17,6 @@ object UserService {
   val userService = HttpService {
     case req @ POST -> Root / "userPassword"  =>
       req.decode[String] { data =>
-
-        println("here i am")
         println(data)
         //logger.info("Received request to create new user profile: " + data)
         //val u: User = read[User](data)
@@ -28,15 +26,16 @@ object UserService {
         httpJsonResponse(UserDal.createUser(up.user, up.password))
       }
 
-   case req @ GET -> Root / "helloworld" => 
-     httpJsonResponse("Hello world!")
+    case req @ GET -> Root / "helloworld" =>
+      httpJsonResponse("Hello world!")
 
-//    case GET -> Root / "player" / userId =>
-//      //logger.info(s"Received request for player $playerId")
-//      //println(s"Received request for player $UserId")
-//      val p = userDal.getPlayer(playerId.toInt)
-//      println(s"Retrieved player $p from database")
-//      httpJsonResponse(p)
+    case GET -> Root / "player" / userId =>
+      //logger.info(s"Received request for player $playerId")
+      //println(s"Received request for player $UserId")
+      val u = UserID(userId)
+      val p = UserDal.getUser(u)
+      println(s"Retrieved player $p from database")
+      httpJsonResponse(p)
 
   }
 
