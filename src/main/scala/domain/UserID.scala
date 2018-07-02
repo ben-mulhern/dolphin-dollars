@@ -1,4 +1,5 @@
 package domain.User
 
 case class UserID(id: String) extends AnyVal
-//object UserID
+
+case class UserIDPassword (userID: UserID, password: String)

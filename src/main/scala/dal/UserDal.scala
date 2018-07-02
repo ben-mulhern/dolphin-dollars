@@ -66,4 +66,21 @@ class UserDal extends SqlestDb {
     tableReadResult <- tryReadUserRecord(userID)
   } yield tableReadResult
 
+//  def updateUserSQL(userID:UserID, newUserInfo:User): Int = {
+//    database.withTransaction { implicit transaction =>
+//      update(UserDetailTable)
+//        .set(UserDetailTable.userID -> newUserInfo.id,
+//          UserDetailTable.name -> newUserInfo.name,
+//          UserDetailTable.emailAddress -> )
+//    }
+//	}
+
+//	def tryUpdateUserRecord(userID:UserID, newUserInfo:User): Either[String,String] = {
+//		val result = updateUserSQL(userID,newUserInfo)
+//	}
+//
+//	def updateUser(userID: UserID,newUserInfo: User): Either[String,String] = for {
+//		userTableDetails <- tryReadUserRecord(userID)
+//		tableWriteResult <- tryUpdateUserRecord(userTableDetails.id,newUserInfo)
+//	} yield tableWriteResult
 }
