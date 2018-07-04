@@ -2,13 +2,13 @@ package dal
 
 import sqlest._
 import domain.User._
+import domain.passwordSaltUtil._
 import dal.table.UserDetailTable
-import service.token.TokenService.{Jwt, createToken}
+import service.token.TokenService.Jwt
 
 
 class PasswordSaltDal extends SqlestDb {
   val UserDal = new UserDal
-  val checkAndCreateTokenFailureMessage: String = "Invalid username or password"
 
   def getPasswordSaltSQL(id: UserID): Option[(String,String)]  = {
     select(UserDetailTable.password, UserDetailTable.salt)
@@ -17,24 +17,15 @@ class PasswordSaltDal extends SqlestDb {
       .fetchHeadOption
   }
 
-
   def getPasswordAndSalt(userID:UserID): Either[String,(String,String)] = {
     val extract: Option[(String,String)] = getPasswordSaltSQL(userID)
     if(extract.isEmpty) Left("User ID or password incorrect")
     else Right(extract.get)
   }
 
-
-
-
-  def checkAndCreateToken(userID: UserID, hashedUserInputPassword: String, databasePassword: String): Either[String,Jwt] = {
-    if (hashedUserInputPassword == databasePassword) Right(createToken(userID))
-    else Left(checkAndCreateTokenFailureMessage)
-  }
-
   def getUserJWT(userID:UserID, userInputtedPassword:String): Either[String,Jwt] = for {
     passwordSalt <- getPasswordAndSalt(userID)
-    hashedUserInputPassword <- UserDal.getHashedPassword(userInputtedPassword,passwordSalt._2)
+    hashedUserInputPassword <- getHashedPassword(userInputtedPassword,passwordSalt._2)
     finalJwt<- checkAndCreateToken(userID, hashedUserInputPassword, passwordSalt._1)
   } yield finalJwt
 

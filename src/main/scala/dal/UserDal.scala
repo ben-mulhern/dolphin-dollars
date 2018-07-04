@@ -2,23 +2,11 @@ package dal
 
 import sqlest._
 import domain.User._
+import domain.passwordSaltUtil._
 import dal.table.UserDetailTable
-import com.github.t3hnar.bcrypt._
+
 
 class UserDal extends SqlestDb {
-
-
-	def getHashedPassword(userInputtedPassword: String, salt: String): Either[String, String] = {
-		val hashedPassword: String = userInputtedPassword.bcrypt(salt)
-		if (hashedPassword.isEmpty) Left("Hashing process failed.")
-		else Right(hashedPassword)
-	}
-
-  def getRandomSalt: Either[String, String] = {
-    val result: String = generateSalt
-    if (result.isEmpty) Left("Could not generate salt")
-    else Right(result)
-  }
 
 	def createUserSQL(user: User, hashedPassword: String, salt: String): Int = {
 

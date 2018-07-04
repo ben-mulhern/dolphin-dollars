@@ -5,6 +5,6 @@ package domain.User
 case class User( id: UserID,
                  name: String,
                  active: Boolean,
-                 email_address: String)
+                 email_address: String) {}
 
 case class UserPassword (user: User, password: String)
