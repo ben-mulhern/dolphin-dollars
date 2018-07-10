@@ -1,8 +1,8 @@
 import domain.User._
+import domain.passwordSaltUtil._
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 import dal.PasswordSaltDal
-import dal.UserDal
 
 class UserServiceTest extends FlatSpec{
 
@@ -16,11 +16,11 @@ class UserServiceTest extends FlatSpec{
   behavior of "The creation of a JWT"
 
   it should "yield a JWT when passwords match" in {
-    psd.checkAndCreateToken(user1,password1,password1) should be ('right)
+    checkAndCreateToken(user1,password1,password1) should be ('right)
   }
 
   it should s"yield a failure message when passwords do not match" in {
-    psd.checkAndCreateToken(user1,password1,password2) should be (Left(psd.checkAndCreateTokenFailureMessage))
+    checkAndCreateToken(user1,password1,password2) should be (Left(checkAndCreateTokenFailureMessage))
   }
 
 
