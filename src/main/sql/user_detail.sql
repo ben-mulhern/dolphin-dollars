@@ -10,9 +10,13 @@ CREATE TABLE user_detail
   salt CHAR(64) NOT NULL,
   active CHAR(1) NOT NULL DEFAULT 'Y',
   email_address VARCHAR(200) NOT NULL,
+  admin CHAR(1) NOT NULL DEFAULT 'N',
   
   --Constraints
   CONSTRAINT active_is_yes_or_no
   CHECK active IN ('Y','N')
+
+  CONSTRAINT admin_is_yes_or_no
+  CHECK admin IN ('Y','N')
 
 );                                                                           

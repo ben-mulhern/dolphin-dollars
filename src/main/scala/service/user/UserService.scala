@@ -37,9 +37,21 @@ object UserService {
       //println(s"Received request for player $UserId")
       val u = UserID(userId)
       val p = UserDal.getUser(u)
-      println(s"Retrieved player $p from database")
+      println(s"updated player $p from database")
       httpJsonResponse(p)
 
+    case GET -> Root / "userIdFromToken" / token =>
+      val p = service.token.TokenService.getUserFromToken(token)
+      println(s"Retrieved user ID $p from token")
+      httpJsonResponse(p.toString)
+
+    case GET -> Root / "hasTokenExpired" / token =>
+      val p = service.token.TokenService.getTokenExpired(token)
+      p match {
+        case true => println("Token has expired")
+        case false => println("Token is valid")
+      }
+      httpJsonResponse(p.toString)
   }
 
 
