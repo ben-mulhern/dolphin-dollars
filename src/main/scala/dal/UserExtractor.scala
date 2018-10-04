@@ -10,6 +10,7 @@ object UserExtractor {
     id = UserDetailTable.userID,
     name = UserDetailTable.name,
     active = UserDetailTable.active,
-    email_address = UserDetailTable.emailAddress
+    email_address = UserDetailTable.emailAddress,
+    admin = UserDetailTable.admin
   )
 }

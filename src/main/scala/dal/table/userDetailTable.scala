@@ -12,7 +12,7 @@ class UserDetailTable(alias: Option[String]) extends Table("user_detail",None) {
   val password: TableColumn[String] = column[String]("password")
   val salt: TableColumn[String] = column[String]("salt")
   val active: TableColumn[Boolean] = column[Boolean]("active")(BooleanYNColumnType)
-
+  val admin: TableColumn[Boolean] = column[Boolean](name = "admin")(BooleanYNColumnType)
 }
 
 object UserDetailTable extends UserDetailTable(None)
