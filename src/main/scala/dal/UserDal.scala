@@ -4,6 +4,7 @@ import sqlest._
 import domain.User._
 import domain.passwordSaltUtil._
 import dal.table.UserDetailTable
+import service.token.TokenService.Jwt
 
 
 class UserDal extends SqlestDb {
@@ -23,16 +24,20 @@ class UserDal extends SqlestDb {
 				).execute
 		}}
 
-	def tryCreateUserRecord(user: User, hashedPassword: String, salt: String): Either[String, String] = {
-		val result: Int = createUserSQL(user, hashedPassword, salt)
-		if (result == 1) Right("User created successfully")
-		else Left("Failed to add user to database")
+	def tryCreateUserRecord(user: User, hashedPassword: String, salt: String, requestingUser: User): Either[String, String] = {
+		//If we are creating an admin then the requesting user must be an admin
+		if (user.admin && !requestingUser.admin) Left("Permission denied!")
+		else {
+			val result: Int = createUserSQL(user, hashedPassword, salt)
+			if (result == 1) Right("User created successfully")
+			else Left("Failed to add user to database")
+		}
 	}
 
-	def createUser(user: User, password: String): Either[String, String] = for {
+	def createUser(user: User, password: String, requestingUser:User) : Either[String, String] = for {
 		salt <- getRandomSalt
 		hashedPassword <- getHashedPassword(password, salt)
-		tableWriteResult <- tryCreateUserRecord(user, hashedPassword, salt)
+		tableWriteResult <- tryCreateUserRecord(user, hashedPassword, salt, requestingUser)
 	} yield tableWriteResult
 
 
@@ -53,6 +58,14 @@ class UserDal extends SqlestDb {
 	def getUser(userID: UserID): Either[String, User] = for {
     tableReadResult <- tryReadUserRecord(userID)
   } yield tableReadResult
+
+	def isAdmin(userID: UserID): Boolean = getUser(userID).getOrElse(false) == true
+
+	def getRequestingUser(token:Jwt) : User = {
+		val userId = service.token.TokenService.getUserFromToken(token).get
+		val user = getUser(userId)
+		user.getOrElse(User(UserID("BAD USER"),"BAD USER", true, "", false))
+	}
 
 //  def updateUserSQL(userID:UserID, newUserInfo:User): Int = {
 //    database.withTransaction { implicit transaction =>

@@ -9,17 +9,18 @@ import org.http4s.server.blaze._
 import org.json4s._
 import org.json4s.native.Serialization.read
 import service.ServiceUtilities._
+import service.token.TokenService.Jwt
 
 object UserService {
 
   val UserDal = new UserDal {}
 
   val userService = HttpService {
-    case req @ POST -> Root / "userPassword"  =>
+    case req @ POST -> Root / "userPassword" =>
       req.decode[String] { data =>
         //logger.info("Received request to create new user profile: " + data)
-        val up = read[UserPassword](data)
-        httpJsonResponse(UserDal.createUser(up.user, up.password))
+        val upt = read[UserPasswordToken](data)
+        httpJsonResponse(UserDal.createUser(upt.user, upt.password, UserDal.getRequestingUser(upt.token)))
       }
 
     case req @ GET -> Root / "helloworld" =>
@@ -37,9 +38,21 @@ object UserService {
       //println(s"Received request for player $UserId")
       val u = UserID(userId)
       val p = UserDal.getUser(u)
-      println(s"Retrieved player $p from database")
+      println(s"updated player $p from database")
       httpJsonResponse(p)
 
+    case GET -> Root / "userIdFromToken" / token =>
+      val p = service.token.TokenService.getUserFromToken(token)
+      println(s"Retrieved user ID $p from token")
+      httpJsonResponse(p.toString)
+
+    case GET -> Root / "hasTokenExpired" / token =>
+      val p = service.token.TokenService.getTokenExpired(token)
+      p match {
+        case true => println("Token has expired")
+        case false => println("Token is valid")
+      }
+      httpJsonResponse(p.toString)
   }
 
 

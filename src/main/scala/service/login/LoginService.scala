@@ -13,11 +13,8 @@ package object LoginService {
   val loginService = HttpService {
     case req@POST -> Root / "loginAttempt" =>
       req.decode[String] { data =>
-        println(data)
         val up = read[UserIDPassword](data)
-        println(up)
         httpJsonResponse(PasswordSaltDal.getUserJWT(up.userID, up.password))
       }
   }
-
 }
