@@ -2,7 +2,6 @@ package framework
 
 import com.typesafe.config.ConfigFactory
 
-<<<<<<< Updated upstream
 case class SecurityConfig(jwtSecret: String, jwtExpirationTime: Long, jwtRefreshTime: Long)
 case class Database(url: String, username:String, password:String, port: Int, dbName: String, schema: String)
 case class Server(host: String, port: Int)
