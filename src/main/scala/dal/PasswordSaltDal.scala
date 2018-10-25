@@ -11,6 +11,8 @@ class PasswordSaltDal extends SqlestDb {
   val UserDal = new UserDal
 
   def getPasswordSaltSQL(id: UserID): Option[(String,String)]  = {
+    setSchema(schema)
+    println("Executing the select statement")
     select(UserDetailTable.password, UserDetailTable.salt)
       .from(UserDetailTable)
       .where(UserDetailTable.userID === id)
