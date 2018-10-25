@@ -33,7 +33,7 @@ trait SqlestDb {
 
   def setSchema(schema: String) = {
     executeRawSql(s"SET SCHEMA '${schema}'")
-    println("Presumably we just set the schema correctly")
+    println(s"Setting schema to $schema")
   }
 
   def executeRawSql(sql: String) =
