@@ -17,11 +17,12 @@ trait SqlestDb {
 
   val dataSource: DataSource = {
     val dataSource = new org.postgresql.ds.PGSimpleDataSource
-    dataSource.setServerName("localhost")
+    dataSource.setServerName(url)
     dataSource.setDatabaseName(dbName)
     dataSource.setPortNumber(dbPort)
     dataSource.setUser(user)
     dataSource.setPassword(password)
+    dataSource.setCurrentSchema(schema)
     dataSource
   }
 
@@ -30,19 +31,5 @@ trait SqlestDb {
   implicit val database: Database = Database.withDataSource(dataSource, statementBuilder)
 
   val upper: ScalarFunctionColumn1[String,String] = ScalarFunction1[String, String]("upper")
-
-  def setSchema(schema: String) = {
-    executeRawSql(s"SET SCHEMA '${schema}'")
-    println(s"Setting schema to $schema")
-  }
-
-  def executeRawSql(sql: String) =
-    database.withConnection { connection =>
-      try {
-        connection.createStatement.execute(sql)
-      } catch {
-        case e: Exception => throw new Error("Failed to set schema")
-      }
-    }
 
 }
