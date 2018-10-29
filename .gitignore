@@ -20,5 +20,3 @@ src/main/resources/application.conf
 
 # IDEA worksheets
 .sc
-
-application.conf
