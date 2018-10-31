@@ -4,7 +4,7 @@ import org.http4s.server.blaze.BlazeBuilder
 import service.user.UserService._
 import service.login.LoginService._
 import service.HeartBeatService._
-import service.currencyService.CurrencyService._
+// import service.currencyService.CurrencyService._
 import framework.Configuration._
 
 object DolphinDollarsServer extends App {
@@ -13,7 +13,7 @@ object DolphinDollarsServer extends App {
     .mountService(userService)
     .mountService(loginService)
     .mountService(HeartBeatService)
-    .mountService(currencyService)
+    //.mountService(currencyService)
     .run
     .awaitShutdown()
 }
