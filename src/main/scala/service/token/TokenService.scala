@@ -4,9 +4,10 @@ package token
 import java.time.Instant
 
 import framework.Configuration
-
 import domain.User._
 import pdi.jwt.{JwtAlgorithm, JwtCirce, JwtClaim}
+
+import scala.util.{Failure, Success}
 
 
 object TokenService {
@@ -26,8 +27,8 @@ object TokenService {
 
   def getUserFromToken(token:Jwt):Option[UserID] = {
     for {claim <- getClaimFromToken(token)
-         userString <- claim.subject
-    } yield UserID(userString)
+         userID <- claim.subject
+    } yield UserID(userID)
   }
 
   def getExpirationTime(token: Jwt):Option[Long] = {

@@ -19,7 +19,11 @@ object UserService {
     case req @ POST -> Root / "userPassword" =>
       req.decode[String] { data =>
         //logger.info("Received request to create new user profile: " + data)
+        println("Got here")
         val upt = read[UserPasswordToken](data)
+        println(s"user = ${upt.user}")
+        println(s"user = ${upt.password}")
+        println(s"token = ${upt.token}")
         httpJsonResponse(UserDal.createUser(upt.user, upt.password, UserDal.getRequestingUser(upt.token)))
       }
 
