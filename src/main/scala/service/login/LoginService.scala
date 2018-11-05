@@ -14,7 +14,11 @@ package object LoginService {
     case req@POST -> Root / "loginAttempt" =>
       req.decode[String] { data =>
         val up = read[UserIDPassword](data)
-        httpJsonResponse(PasswordSaltDal.getUserJWT(up.userID, up.password))
+        val jwt = PasswordSaltDal.getUserJWT(up.userID, up.password)
+        if (jwt.isRight)
+          httpJsonResponse(jwt).addCookie(Cookie("authcookie", jwt.getOrElse("")))
+        else
+          httpJsonResponse(jwt)
       }
   }
 }
