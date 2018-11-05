@@ -8,7 +8,6 @@ import service.token.TokenService.Jwt
 
 
 class PasswordSaltDal extends SqlestDb {
-  val UserDal = new UserDal
 
   def getPasswordSaltSQL(id: UserID): Option[(String,String)]  =  
     select(UserDetailTable.password, UserDetailTable.salt)

@@ -7,7 +7,7 @@ import dal.table.UserDetailTable
 import service.token.TokenService.Jwt
 
 
-class UserDal extends SqlestDb {
+object UserDal extends SqlestDb {
 
 	def createUserSQL(user: User, hashedPassword: String, salt: String): Int = {
 

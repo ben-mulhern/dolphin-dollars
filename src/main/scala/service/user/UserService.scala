@@ -13,8 +13,6 @@ import service.token.TokenService.Jwt
 
 object UserService {
 
-  val UserDal = new UserDal {}
-
   val userService = HttpService {
     case req @ POST -> Root / "userPassword" =>
       req.decode[String] { data =>
