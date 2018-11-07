@@ -6,8 +6,4 @@ object EitherUtilities {
     if (condition) Right(Unit)
     else Left(failMessage)
 
-  def optionToEither[A](opt: Option[A], noneMessage: String): Either[String, A] = 
-    if (opt.isEmpty) Left(noneMessage)
-    else Right(opt.get)
-
 }
