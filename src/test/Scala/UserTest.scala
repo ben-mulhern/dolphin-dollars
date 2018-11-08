@@ -1,5 +1,5 @@
 import domain.User._
-import domain.passwordSaltUtil._
+import domain.PasswordSaltUtil._
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 import dal.PasswordSaltDal

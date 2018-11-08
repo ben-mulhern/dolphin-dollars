@@ -7,9 +7,6 @@ import framework.Configuration
 import domain.User._
 import pdi.jwt.{JwtAlgorithm, JwtCirce, JwtClaim}
 
-import scala.util.{Failure, Success}
-
-
 object TokenService {
 
   type Jwt = String

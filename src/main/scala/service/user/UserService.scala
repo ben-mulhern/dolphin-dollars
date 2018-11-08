@@ -2,15 +2,12 @@ package service.user
 
 import domain.User._
 import dal._
-import org.json4s._
 import org.json4s.native.Serialization.read
 import service.ServiceUtilities._
-import service.token.TokenService.Jwt
 
 import cats.effect._
 import org.http4s._
 import org.http4s.dsl.io._
-import scala.concurrent.ExecutionContext.Implicits.global
 import org.http4s.server.middleware._
 
 object UserService {
