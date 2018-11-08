@@ -14,9 +14,9 @@ CREATE TABLE user_detail
   
   --Constraints
   CONSTRAINT active_is_yes_or_no
-  CHECK active IN ('Y','N')
+  CHECK (active IN ('Y','N')),
 
   CONSTRAINT admin_is_yes_or_no
-  CHECK admin IN ('Y','N')
+  CHECK (admin IN ('Y','N'))
 
 );                                                                           
