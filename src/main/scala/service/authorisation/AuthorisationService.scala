@@ -22,31 +22,20 @@ object AuthorisationService {
 
   def authorisationCheck(request: Request[IO], user: Option[UserID] = None): Either[String, Unit] = {
 
-    // This bit needs some work
-    //val test: String = headers.Cookie.from(request.headers)
-    // val cookieJwt2 = for {
-    //   h <- headers.Cookie.from(request.headers).toRight("Can't find cookie header")
-    //   c <- h.values.toList.find(_.name == "authcookie").toRight("Couldn't find the authcookie")
-    // } yield c
+    val cookieJwt = for {
+      h <- headers.Cookie.from(request.headers).toRight("Can't find cookie header")
+      c <- h.values.toList.find(_.name == "authcookie").toRight("Couldn't find the authcookie")
+    } yield c.content
 
-    // val jwt = 
-    //   if (cookieJwt.nonEmpty) cookieJwt 
-    //   else {
-    //     val authHeader = request.headers.find(_.name == CaseInsensitiveString("Authorization"))
-    //     authHeader.map(_.value.drop(7)).getOrElse("")
-    //   }
+    val jwt = 
+      if (cookieJwt.isRight) cookieJwt
+      else for {
+        h <- headers.Authorization.from(request.headers).toRight("Can't find authorisation header")
+      } yield h.value.drop(7)
 
-    val cookieHeader = request.headers.find(_.name == CaseInsensitiveString("Cookie"))
-    val cookieJwt = cookieHeader.map(_.value).getOrElse("")
-
-    val authHeader = request.headers.find(_.name == CaseInsensitiveString("Authorization"))
-    val authJwt = authHeader.map(_.value.drop(7)).getOrElse("")    
-
-    val jwt = if (cookieJwt.nonEmpty) cookieJwt else authJwt
-
-    for {      
-      t <- getHeartBeatUpdate(jwt)
-      // u <- optionToEither(getUserFromToken(t), "Could not find user ID in JWT")    
+    for {  
+      j <- jwt    
+      t <- getHeartBeatUpdate(j)
       u <- getUserFromToken(t).toRight("Could not find user ID in JWT")
     } yield eitherTest((user.isEmpty || (user.get == u) || isAdmin(u)), "Requesting user not authorised to this user's data")
   }
