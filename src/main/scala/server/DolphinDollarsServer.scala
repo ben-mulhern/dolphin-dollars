@@ -3,6 +3,7 @@ package server
 import service.user.UserService._
 import service.login.LoginService._
 import service.HeartBeatService._
+import service.currency.CurrencyService._
 import framework.Configuration._
 
 import cats.implicits._
@@ -20,7 +21,8 @@ object Main extends StreamApp[IO] {
 
   println("Starting web server")
 
-  val services = userCorsService <+> loginCorsService <+> heartBeatCorsService
+  val services = userCorsService <+> loginCorsService <+> heartBeatCorsService <+>
+                 currencyCorsService
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]

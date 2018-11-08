@@ -95,4 +95,10 @@ object UserDal extends SqlestDb {
 	}
 
 	def updateUser(userID: UserID,newUserInfo: User, requestingUser: User): Either[String,String] = doSQL(newUserInfo, requestingUser, updateUserSQL, "User updated successfully", "Failed to update user")
+
+	def isAdmin(user: UserID): Boolean = 
+		select(UserDetailTable.admin)
+			.from(UserDetailTable)
+			.where(UserDetailTable.userID === user)
+			.fetchHeadOption.getOrElse(false)
 }

@@ -1,20 +1,21 @@
-package service.currencyService
+package service.currency
 
 
 import domain.User._
 import dal._
 import domain.{Currency, CurrencyCode, CurrencyToken}
-import org.http4s._
-import org.http4s.dsl._
 import org.json4s.native.Serialization.read
 import service.ServiceUtilities._
 
+import cats.effect._
+import org.http4s._
+import org.http4s.dsl.io._
+import scala.concurrent.ExecutionContext.Implicits.global
+import org.http4s.server.middleware._
+
 object CurrencyService {
-
-  val CurrencyDal = new CurrencyDal {}
-  val UserDal = new UserDal {}
-
-  val currencyService = HttpService {
+ 
+  val currencyService = HttpService[IO] {
     case req@POST -> Root / "createCurrency" =>
       req.decode[String] { data =>
         val ct = read[CurrencyToken](data)
@@ -45,5 +46,8 @@ object CurrencyService {
       }
 
   }
+
+  val currencyCorsService = CORS(currencyService, methodConfig)
+
 }
 
