@@ -4,7 +4,7 @@ import com.typesafe.config.ConfigFactory
 
 case class SecurityConfig(jwtSecret: String, jwtExpirationTime: Long, jwtRefreshTime: Long)
 case class Database(url: String, username:String, password:String, port: Int, dbName: String, schema: String)
-case class Server(host: String, port: Int)
+case class ServerConfig(host: String, port: Int)
 
 
 object Configuration {
@@ -26,6 +26,6 @@ object Configuration {
 
   val securityConfig: SecurityConfig = SecurityConfig(jwtSecret,jwtExpirationTime, jwtRefreshTime)
   val database: Database = Database(url,username,password, dbPort, dbName, schema)
-  val server: Server = Server(host,port)
+  val serverConfig: ServerConfig = ServerConfig(host,port)
 
 }
