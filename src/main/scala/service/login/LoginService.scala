@@ -21,7 +21,7 @@ package object LoginService {
         val jwt = PasswordSaltDal.getUserJWT(up.userID, up.password)
         if (jwt.isRight) {
           val cookie = Cookie("authcookie", jwt.getOrElse(""), 
-                              httpOnly = true, secure = serverConfig.secure)
+                              httpOnly = true, secure = serverConfig.https)
           httpJsonResponse(jwt).addCookie(cookie)
         } else httpJsonResponse(jwt)
       }

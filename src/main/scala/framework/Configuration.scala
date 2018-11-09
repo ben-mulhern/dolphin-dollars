@@ -4,7 +4,7 @@ import com.typesafe.config.ConfigFactory
 
 case class SecurityConfig(jwtSecret: String, jwtExpirationTime: Long, jwtRefreshTime: Long)
 case class Database(url: String, username:String, password:String, port: Int, dbName: String, schema: String)
-case class ServerConfig(host: String, port: Int, secure: Boolean)
+case class ServerConfig(host: String, port: Int, https: Boolean)
 
 
 object Configuration {
@@ -19,7 +19,7 @@ object Configuration {
 
   val host: String = conf.getString("appserver.host")
   val port: Int = conf.getInt("appserver.port")
-  val secure: Boolean = conf.getBoolean("appserver.secure")
+  val https: Boolean = conf.getBoolean("appserver.https")
 
   val jwtSecret: String = conf.getString("appsecurity.jwtSecret")
   val jwtExpirationTime: Long = BigInt(conf.getString("appsecurity.jwtExpirationTime")).toLong
@@ -27,6 +27,6 @@ object Configuration {
 
   val securityConfig: SecurityConfig = SecurityConfig(jwtSecret, jwtExpirationTime, jwtRefreshTime)
   val database: Database = Database(url, username, password, dbPort, dbName, schema)
-  val serverConfig: ServerConfig = ServerConfig(host, port, secure)
+  val serverConfig: ServerConfig = ServerConfig(host, port, https)
 
 }
