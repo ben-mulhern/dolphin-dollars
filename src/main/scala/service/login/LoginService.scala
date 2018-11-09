@@ -9,6 +9,7 @@ import cats.effect._
 import org.http4s._
 import org.http4s.dsl.io._
 import org.http4s.server.middleware._
+import framework.Configuration._
 
 package object LoginService {
 
@@ -18,10 +19,11 @@ package object LoginService {
       req.decode[String] { data =>
         val up = read[UserIDPassword](data)
         val jwt = PasswordSaltDal.getUserJWT(up.userID, up.password)
-        if (jwt.isRight)
-          httpJsonResponse(jwt).addCookie(Cookie("authcookie", jwt.getOrElse("")))
-        else
-          httpJsonResponse(jwt)
+        if (jwt.isRight) {
+          val cookie = Cookie("authcookie", jwt.getOrElse(""), 
+                              httpOnly = true, secure = serverConfig.secure)
+          httpJsonResponse(jwt).addCookie(cookie)
+        } else httpJsonResponse(jwt)
       }
   }
   val loginCorsService = CORS(loginService, methodConfig)
