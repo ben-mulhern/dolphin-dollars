@@ -20,7 +20,7 @@ object AuthorisationService {
   //   the data subject - then great - people can see their own data.
   //   Also admin users are allowed to see everything.
 
-  def authorisationCheck(request: Request[IO], user: Option[UserID] = None): Either[String, Unit] = {
+  def authorisationCheck(request: Request[IO], user: Option[UserID] = None): Either[String, Request[IO]] = {
 
     val cookieJwt = for {
       h <- headers.Cookie.from(request.headers).toRight("Can't find cookie header")
@@ -36,8 +36,9 @@ object AuthorisationService {
     for {  
       j <- jwt    
       t <- getHeartBeatUpdate(j)
-      u <- getUserFromToken(t).toRight("Could not find user ID in JWT")
-    } yield eitherTest((user.isEmpty || (user.get == u) || isAdmin(u)), "Requesting user not authorised to this user's data")
+      u <- getUserFromToken(t).toRight("Could not find user ID in JWT") 
+      _ <- eitherTest((user.isEmpty || (user.get == u) || isAdmin(u)), "Requesting user not authorised to this user's data")
+    } yield request
   }
 
 }

@@ -13,9 +13,9 @@ import framework.Configuration._
 
 package object LoginService {
 
-  val PasswordSaltDal = new PasswordSaltDal {}
+  val PasswordSaltDal = new PasswordSaltDal
   val loginService = HttpService[IO] {
-    case req@POST -> Root / "loginAttempt" =>
+    case req @ POST -> Root / "loginAttempt" =>
       req.decode[String] { data =>
         val up = read[UserIDPassword](data)
         val jwt = PasswordSaltDal.getUserJWT(up.userID, up.password)
