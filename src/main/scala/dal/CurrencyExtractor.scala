@@ -2,7 +2,6 @@ package dal
 
 import dal.table.CurrencyTable
 import domain.Currency
-import domain.CurrencyCode
 import sqlest._
 
 object CurrencyExtractor {

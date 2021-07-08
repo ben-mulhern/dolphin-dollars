@@ -4,7 +4,7 @@ import com.github.t3hnar.bcrypt._
 import domain.User.UserID
 import service.token.TokenService.{Jwt, createToken}
 
-object passwordSaltUtil {
+object PasswordSaltUtil {
 
   val checkAndCreateTokenFailureMessage: String = "Invalid username or password"
 

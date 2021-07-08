@@ -5,7 +5,7 @@ import dal.table.CurrencyTable
 import domain.Currency
 import domain.User.User
 
-class CurrencyDal extends SqlestDb {
+object CurrencyDal extends SqlestDb {
 
   def createCurrencySQL(currency: Currency): Int = {
 

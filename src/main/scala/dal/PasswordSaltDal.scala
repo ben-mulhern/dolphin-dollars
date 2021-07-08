@@ -2,13 +2,12 @@ package dal
 
 import sqlest._
 import domain.User._
-import domain.passwordSaltUtil._
+import domain.PasswordSaltUtil._
 import dal.table.UserDetailTable
 import service.token.TokenService.Jwt
 
 
 class PasswordSaltDal extends SqlestDb {
-  val UserDal = new UserDal
 
   def getPasswordSaltSQL(id: UserID): Option[(String,String)]  =  
     select(UserDetailTable.password, UserDetailTable.salt)

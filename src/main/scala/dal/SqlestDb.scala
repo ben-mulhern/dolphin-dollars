@@ -3,7 +3,6 @@ package dal
 import javax.sql.DataSource
 
 import sqlest._
-import com.typesafe.config._
 import framework.Configuration
 import sqlest.sql.PostgresStatementBuilder
 

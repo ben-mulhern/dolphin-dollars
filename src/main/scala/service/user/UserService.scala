@@ -2,20 +2,17 @@ package service.user
 
 import domain.User._
 import dal._
-import org.http4s._
-import org.http4s.dsl._
-import org.http4s.server._
-import org.http4s.server.blaze._
-import org.json4s._
 import org.json4s.native.Serialization.read
 import service.ServiceUtilities._
-import service.token.TokenService.Jwt
+
+import cats.effect._
+import org.http4s._
+import org.http4s.dsl.io._
+import org.http4s.server.middleware._
 
 object UserService {
 
-  val UserDal = new UserDal {}
-
-  val userService = HttpService {
+  val userService = HttpService[IO] {
     case req @ POST -> Root / "userPassword" =>
       req.decode[String] { data =>
         //logger.info("Received request to create new user profile: " + data)
@@ -59,7 +56,7 @@ object UserService {
       httpJsonResponse(p.toString)
   }
 
-
+  val userCorsService = CORS(userService, methodConfig)
 
 }
 

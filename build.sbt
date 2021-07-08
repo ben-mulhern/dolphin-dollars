@@ -1,6 +1,8 @@
 name := "dolphin-dollars"
 version := "0.1"
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.7"
+
+val http4sVersion = "0.18.21"
 
 
 libraryDependencies ++= Seq(
@@ -10,10 +12,9 @@ libraryDependencies ++= Seq(
   "org.json4s" %% "json4s-ext" % "3.6.0-M4",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0",
   "org.scalactic" %% "scalactic" % "3.0.1",
-  //"com.h2database" % "h2" % "1.4.197",
   "org.postgresql" % "postgresql" % "42.2.5",
-  "org.http4s" %% "http4s-dsl" % "0.15.8",
-  "org.http4s" %% "http4s-blaze-server" % "0.15.8",
+  "org.http4s" %% "http4s-dsl" % http4sVersion,
+  "org.http4s" %% "http4s-blaze-server" % http4sVersion,
   "io.circe" %% "circe-generic" % "0.9.3" ,
   "com.pauldijou" %% "jwt-circe" % "0.16.0",
   "com.roundeights" %% "hasher" % "1.2.0",
@@ -25,3 +26,5 @@ libraryDependencies ++= Seq(
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 resolvers += "Sonatype OSS Releases"  at "http://oss.sonatype.org/content/repositories/releases/"
+
+scalacOptions ++= Seq("-Ypartial-unification")
